@@ -26,14 +26,25 @@ struct Node
 // Evaluate polynomial given by head for the given x
 double eval(Node* head, double x)
 {
-    // YOUR CODE HERE
+    double temp = 0;
+    while (head)
+    {
+        temp += head -> coeff * std::exp(x, head -> exp);
+
+        head = head -> next;
+    }
+
+    return temp;
 }
 
 // Adds the two polynomials given by head1 and head2 and returns
 // the head of the resulting polynomial
 Node* addPolynomials(Node* head1, Node* head2)
 {
-    // YOUR CODE HERE
+    while (head1)
+    {
+        
+    }
 }
 
 int main()
