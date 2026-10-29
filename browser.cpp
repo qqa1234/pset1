@@ -17,8 +17,19 @@ private:
      * track of
      */
 
-     // YOUR CODE HERE
+    struct Node 
+    {
+        string url;
+        Node* next = nullptr;
+        Node* prev = nullptr;
 
+        Node (string u)
+        {
+            url = u;
+        }
+    };
+
+    Node* cur;
 public:
     
     /**
@@ -28,7 +39,7 @@ public:
      */
     BrowserHistory(string homepage) 
     {
-        // YOUR CODE HERE
+        cur = new Node (homepage);
     }
 
     /**
@@ -39,7 +50,17 @@ public:
      */
     ~BrowserHistory()
     {
-        // YOUR CODE HERE
+        while (cur -> prev)
+        {
+            cur = cur -> prev;
+        }
+
+        while (cur)
+        {
+            Node * temp = cur;
+            cur = cur -> next;
+            delete temp;
+        }
     }
     
     /**
@@ -47,7 +68,21 @@ public:
      */
     void visit(string url) 
     {
-        // YOUR CODE HERE
+        Node* ptr = cur -> next;
+
+        while (ptr)
+        {
+            Node* temp = ptr;
+            ptr = ptr -> next;
+            delete temp;
+        }
+
+        Node* newPage = new Node (url);
+
+        cur -> next = newPage;
+        newPage -> prev = cur;
+
+        cur = newPage;
     }
     
     /** 
@@ -58,7 +93,12 @@ public:
      */ 
     string back(int steps) 
     {
-        // YOUR CODE HERE
+        while (steps > 0 && cur -> prev)
+        {
+            cur = cur -> prev;
+            steps--;
+        }
+        return cur -> url;
     }
 
     /** 
@@ -68,7 +108,12 @@ public:
     */ 
     string forward(int steps) 
     {
-        // YOUR CODE HERE
+        while (steps > 0 && cur -> next)
+        {
+            cur = cur -> next;
+            steps--;
+        }
+        return cur -> url;
     }
 };
 
@@ -81,4 +126,14 @@ int main()
     bh->visit("cppreference.com"); // go to cppreference (google 3 back in history)
     assert(bh->back(2) == "amazon.com"); // go back 2, should be at amazon
     assert(bh->forward(1) == "wikipedia.com"); // go forward 1, should be at wikipedia
+    
+    
+    assert(bh -> back(100) == "google.com");
+    assert(bh -> forward(1) == "amazon.com");
+    assert(bh -> forward(100) == "cppreference.com");
+    assert(bh -> back (2) == "amazon.com"); bh -> visit ("github.com"); assert(bh -> forward(1) == "github.com");
+    assert(bh -> back(1) == "amazon.com");
+
+    delete bh;
+
 }
