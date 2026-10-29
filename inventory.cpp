@@ -134,9 +134,9 @@ int main()
 {
     vector<item> inventory;
 
-    item a = item (103, "a", 5);
-    item b = item (101, "b", 20);
-    item c = item (102, "c", 10);
+    item a = item (103, "motor", 5);
+    item b = item (101, "bolt", 20);
+    item c = item (102, "gear", 10);
 
     add(inventory, a);
     add(inventory, b);
